@@ -154,6 +154,74 @@ int DFS() {
     return component;
 }
 
+
+bool Sort(const pair<string, int> &p1, const pair<string, int> &p2) {
+    return p1.first < p2.first;
+}
+
+vector<map<string, int> *>* Solution() {
+    auto *vm = new vector<map<string, int> *>;
+    vm->clear();
+    for (auto &i : graph) {
+        stack<GNode *> S;
+        if (visit[i.first]) {
+            continue;
+        }
+        S.push(i.second);
+        auto *m = new map<string, int>;
+        m->clear();
+        while (!S.empty()) {
+            GNode *gNode = S.top();
+            S.pop();
+            Edge *edge = gNode->head;
+//            cout << " --- " << gNode->nodeName;
+            visit[gNode->nodeName] = true;
+            while (edge != nullptr) {
+                if (!visit[edge->nodeName]) {
+                    S.push(graph[edge->nodeName]);
+                    visit[edge->nodeName] = true;
+                }
+                (*m)[gNode->nodeName] += edge->weight;
+                (*m)[edge->nodeName] += edge->weight;
+                edge = edge->next;
+            }
+        }
+        if (!m->empty() && m->size() >= 3) vm->push_back(m);
+    }
+    return vm;
+}
+
+void showResult(vector<map<string, int> *> *vm, int threshold) {
+    vector<pair<string, int>> vp;
+    for (auto m : *vm) {
+        if (m->size() >= 3) {
+            int total = 0;
+            int maxWeight = INT_MIN;
+            string maxString;
+            for (auto &j : *m) {
+                if (j.second > maxWeight) {
+                    maxWeight = j.second;
+                    maxString = j.first;
+                }
+                total += j.second;
+            }
+            if (total > threshold * 4) {
+//                cout << maxString << " " << m->size() << endl;
+                vp.push_back(make_pair(maxString, m->size()));
+            }
+        }
+    }
+    if (!vp.empty()) {
+        sort(vp.begin(), vp.end(), Sort);
+        cout << vp.size() << endl;
+        for (const pair<string, int>& p : vp) {
+            cout << p.first << " " << p.second << endl;
+        }
+    } else {
+        cout << 0 << endl;
+    }
+}
+
 int test() {
     int n, k;
     while (cin >> n >> k) {
@@ -166,12 +234,13 @@ int test() {
             InsertEdge(str1, str2, weight);
             InsertEdge(str2, str1, weight); //构造无向图 ，插入两条边
         }
-        showGraph();
-        cout << endl;
-        DFS();
+//        showGraph();
+//        cout << endl;
+//        DFS();
         InitialVisit();
-        cout << endl;
-        BFS();
+//        cout << endl;
+        vector<map<string, int> *> *mp = Solution();
+        showResult(mp, k);
     }
     return 0;
 }
