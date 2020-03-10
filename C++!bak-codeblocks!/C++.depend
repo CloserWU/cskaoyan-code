@@ -1,0 +1,81 @@
+# depslib dependency file v1.0
+1582081050 source:d:\cskaoyan-code\c++\src\chapter2-violence.cpp
+	"../include/chapter2-violence.h"
+
+1582081049 d:\cskaoyan-code\c++\include\chapter2-violence.h
+	<bits/stdc++.h>
+
+1583671586 source:d:\cskaoyan-code\c++\src\main.cpp
+	<bits/stdc++.h>
+	"../include/chapter2-violence.h"
+	"../include/SortFind.h"
+	"../include/String.h"
+	"../include/DataStructure.h"
+	"../include/Mathematics.h"
+	"../include/Greedy.h"
+	"../include/Recursive.h"
+	"../include/Search.h"
+	"../include/DataStructure2.h"
+	"../include/Graph.h"
+
+1582189926 d:\cskaoyan-code\c++\include\sortfind.h
+	<bits/stdc++.h>
+
+1582190818 source:d:\cskaoyan-code\c++\src\sortfind.cpp
+	"../include/SortFind.h"
+
+1582511809 d:\cskaoyan-code\c++\include\string.h
+	<bits/stdc++.h>
+
+1582516237 source:d:\cskaoyan-code\c++\src\string.cpp
+	"../include/String.h"
+
+1582551572 source:d:\cskaoyan-code\c++\src\datastructure.cpp
+	"../include/DataStructure.h"
+
+1582547219 d:\cskaoyan-code\c++\include\datastructure.h
+	<bits/stdc++.h>
+
+1582593669 d:\cskaoyan-code\c++\include\mathematics.h
+	<bits/stdc++.h>
+
+1582854451 source:d:\cskaoyan-code\c++\src\mathematics.cpp
+	"../include/Mathematics.h"
+
+1583236264 d:\cskaoyan-code\c++\include\greedy.h
+	<bits/stdc++.h>
+
+1583463584 d:\cskaoyan-code\c++\include\recursive.h
+	<bits/stdc++.h>
+
+1583236285 source:d:\cskaoyan-code\c++\src\greedy.cpp
+	"../include/Greedy.h"
+
+1583463654 source:d:\cskaoyan-code\c++\src\recursive.cpp
+	"../include/Recursive.h"
+
+1583463799 d:\cskaoyan-code\c++\include\search.h
+	<bits/stdc++.h>
+
+1583463972 source:d:\cskaoyan-code\c++\src\search.cpp
+	"../include/Search.h"
+	<stdio.h>
+
+1583556907 d:\cskaoyan-code\c++\include\datastructure2.h
+	<bits/stdc++.h>
+	<string>
+
+1583565652 source:d:\cskaoyan-code\c++\src\datastructure2.cpp
+	"../include/DataStructure2.h"
+	<bits/stdc++.h>
+
+1583671545 d:\cskaoyan-code\c++\include\graph.h
+	<bits/stdc++.h>
+
+1583806178 source:d:\cskaoyan-code\c++\src\graph.cpp
+	"../include/Graph.h"
+	<utility>
+
+1583806266 source:d:\cskaoyan-code\c++\src\ds\graph.cpp
+	<bits/stdc++.h>
+
