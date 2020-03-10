@@ -1,7 +1,6 @@
-**/obj
-**/bin
+**/obj/
+**/bin/
 **/.idea
-**/target
+**/target/
 **/*.iml
-**/.idea
-**/cmake-build-debug
+**/cmake-build-debug/
