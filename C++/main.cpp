@@ -14,8 +14,8 @@
 using namespace std;
 
 int main() {
-    test();
-//    Graph obj;
-//    obj.func3();
+//    test();
+    Graph obj;
+    obj.func5();
     return 0;
 }

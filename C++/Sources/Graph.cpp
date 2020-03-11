@@ -156,7 +156,79 @@ void Graph::func2() {
 }
 
 
-
 void Graph::func3() {
+//        见 DS/Graph.cpp test()
+}
 
+class Ed {
+public:
+    int from;
+    int to;
+    double weight;
+
+    Ed(int from, int to, double weight) : from(from), to(to), weight(weight) {}
+
+    bool operator<(const Ed &e) const {
+        return weight < e.weight;
+    }
+};
+
+double getDist(pair<double, double> p1, pair<double, double> p2) {
+    return sqrt(pow((p1.first - p2.first), 2) + pow((p1.second - p2.second), 2));
+}
+
+double Kruskal(vector<Ed> ve) {
+    sort(ve.begin(), ve.end());
+    double sum = 0.0;
+    for (auto cur : ve) {
+        if (Find(cur.from) != Find(cur.to)) {
+            Union(cur.from, cur.to);
+            sum += cur.weight;
+        }
+    }
+    return sum;
+}
+
+void Graph::func4() {
+    int n;
+    while (cin >> n) {
+        double x;
+        double y;
+        vector<pair<double, double>> vp;
+        vector<Ed> ve;
+        for (int i = 0; i < n; ++i) {
+            cin >> x >> y;
+            vp.push_back(make_pair(x, y));
+        }
+        for (int i = 0; i < n - 1; ++i) {
+            for (int j = i + 1; j < n; ++j) {
+                ve.push_back(Ed(i, j, getDist(vp[i], vp[j])));
+            }
+        }
+        cout << fixed << setprecision(2) << Kruskal(ve) << endl;
+    }
+
+}
+
+void Graph::func5() {
+    int n;
+    while (cin >> n) {
+        if (n == 0) break;
+        vector<Ed> ve;
+        father.clear();
+        height.clear();
+        ve.clear();
+        for (int i = 0; i < n - 1; ++i) {
+            char from;
+            int m;
+            cin >> from >> m;
+            for (int j = 0; j < m; ++j) {
+                int dist;
+                char to;
+                cin >> to >> dist;
+                ve.push_back(Ed(from - 'A', to - 'A', dist));
+            }
+        }
+        cout << (int) Kruskal(ve) << endl;
+    }
 }
