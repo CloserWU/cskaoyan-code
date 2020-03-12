@@ -152,10 +152,12 @@ int test1() {
             if (camp == 1) camp1.push_back(i + 1);
             else camp2.push_back(i + 1);
         }
+        //先用两次dijkstra算法，分别求出1、2到同阵营各城市的最短路径长度，结果分别存在d1[N]、d2[N]。
         vector<int> dist1 = Dijkstra(1, camp1);  // 阵营1最短路
         vector<int> dist2 = Dijkstra(2, camp2);  // 阵营2最短路
         vector<pair<int, int>> vp; // 跨阵营1，2的边 的顶点
         vector<int> vplen;  // 跨阵营1， 2的边的weight
+        //再遍历穿越边境的边，比方说<i, j>穿越边境且i、j分别属于阵营1、阵营2，G[i][j]是i到j的距离，
         for (int &i : camp1) {
             vector<Edge> ve = graph[i];
             for (int &j : camp2) {
@@ -168,6 +170,7 @@ int test1() {
             }
             ve.clear();
         }
+        // 那么G[i][j]+d1[i]+d2[j]就是从这条路过境的总路径长度。找出这类路径长度里最短的那条，输出即可
         long long minLen = INT_MAX;
         for (int i = 0; i < vp.size(); ++i) {
             if (dist1[vp[i].first] == INT_MAX || dist2[vp[i].second] == INT_MAX) {
