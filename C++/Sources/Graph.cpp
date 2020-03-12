@@ -232,3 +232,13 @@ void Graph::func5() {
         cout << (int) Kruskal(ve) << endl;
     }
 }
+
+void Graph::func6() {
+ // DS/Graph.cpp 和 DS/Graph01.cpp 分别从链表和数组的形式表达了图的形状，
+ // 本题数据较大，long 和 int都剩不下。改用java，详见Graph.java 和 Graph01.java （最终解）
+}
+
+void Graph::func7() {
+
+}
+

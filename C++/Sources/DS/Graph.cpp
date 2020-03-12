@@ -1,6 +1,7 @@
 //
 // Created by Closer on 2020/3/10.
 //
+// 按点的名字处理点，建议不用链表表示边，较为复杂，也不是不可以
 
 #include <bits/stdc++.h>
 
@@ -44,6 +45,7 @@ public:
 
 map<string, GNode *> graph;  // <string, GNode*> --> <顶点， 顶点指针>
 map<string, bool> visit;
+map<string, int> dist;
 
 void InitialVisit() {
     map<string, bool>::iterator it;
@@ -56,6 +58,8 @@ void InitialVisit() {
 }
 
 void InitialGraph() {
+    dist.clear();
+    visit.clear();
     for (auto &i : graph) {
         GNode *gNode = i.second;
         Edge *edge = gNode->head;
@@ -67,6 +71,7 @@ void InitialGraph() {
         }
         delete gNode;
     }
+    graph.clear();
 }
 
 // 插入 node1 -> node2 的边
@@ -83,6 +88,7 @@ void InsertEdge(const string &node1, const string &node2, int weight) {
         graph[node1] = gNode;
     }
     visit[node1] = false;
+    dist[node1] = INT_MAX;
 }
 
 void showGraph() {
@@ -159,7 +165,7 @@ bool Sort(const pair<string, int> &p1, const pair<string, int> &p2) {
     return p1.first < p2.first;
 }
 
-vector<map<string, int> *>* Solution() {
+vector<map<string, int> *> *Solution() {
     auto *vm = new vector<map<string, int> *>;
     vm->clear();
     for (auto &i : graph) {
@@ -214,7 +220,7 @@ void showResult(vector<map<string, int> *> *vm, int threshold) {
     if (!vp.empty()) {
         sort(vp.begin(), vp.end(), Sort);
         cout << vp.size() << endl;
-        for (const pair<string, int>& p : vp) {
+        for (const pair<string, int> &p : vp) {
             cout << p.first << " " << p.second << endl;
         }
     } else {
@@ -274,3 +280,61 @@ FFF --> HHH 10 --> GGG 30 --> DDD 5
 GGG --> HHH 20 --> FFF 30
 HHH --> FFF 10 --> GGG 20
 */
+
+class Point {
+public:
+    string nodeName;
+    int distance;
+
+    Point(string nodeName, int distance) : nodeName(move(nodeName)), distance(distance) {}
+
+    bool operator<(const Point &p) const {
+        return distance > p.distance;
+    }
+};
+
+void Dijkstra(const string& source) {
+    priority_queue<Point> queue;
+    dist[source] = 0;
+    queue.push(Point(source, dist[source]));
+    while (!queue.empty()) {
+        string key = queue.top().nodeName;
+        queue.pop();
+        GNode *gNode = graph[key];
+        Edge *edge = gNode->head;
+        while (edge != nullptr) {
+            string end = edge->nodeName;
+            int d = edge->weight;
+            if (dist[end] > dist[key] + d) {
+                dist[end] = dist[key] + d;
+                queue.push(Point(end, dist[end]));
+            }
+            edge = edge->next;
+        }
+    }
+}
+
+int test1() {
+    int n, m;
+    while (cin >> n >> m) {
+        InitialGraph();
+        string str1;
+        string str2;
+        for (int i = 0; i < n; ++i) {
+            cin >> str1 >> str2;
+            InsertEdge(str1, str2, pow(2, i));
+            InsertEdge(str2, str1, pow(2, i)); //构造无向图 ，插入两条边
+        }
+//        showGraph();
+//        cout << endl;
+//        InitialVisit();
+//        DFS();
+        Dijkstra("0");  // 计算从点0到其他点的距离
+        map<string, int>::iterator it;
+        for (it = dist.begin(); it != dist.end(); it++) {
+            if (it != dist.begin())
+                cout << it->second << endl;
+        }
+    }
+    return 0;
+}

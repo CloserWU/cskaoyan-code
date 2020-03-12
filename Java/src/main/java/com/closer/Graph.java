@@ -45,6 +45,7 @@ public class Graph {
 
     private Map<String, GNode> graph = new HashMap<>();
     private Map<String, Boolean> visit = new HashMap<>();
+    private Map<String, Integer> dist = new HashMap<>();
 
 
     void initialVisit() {
@@ -54,6 +55,8 @@ public class Graph {
     }
 
     void initialGraph() {
+        visit.clear();;
+        dist.clear();
         for (Map.Entry<String, GNode> entry : graph.entrySet()) {
             GNode gNode = entry.getValue();
             Edge edge = gNode.head;
@@ -64,6 +67,7 @@ public class Graph {
                 tmp = null;
             }
         }
+        graph.clear();
     }
 
     void insertEdge(String key1, String key2, int weight) {
@@ -80,6 +84,7 @@ public class Graph {
             graph.put(key1, gNode);
         }
         visit.put(key1, false);
+        dist.put(key1, Integer.MAX_VALUE);
     }
 
     void showGraph() {
@@ -238,15 +243,13 @@ public class Graph {
         }
     }
 
-
-    public static void main(String[] args) {
-        Graph graph = new Graph();
+    void test1() {
         int n, k;
         Scanner input = new Scanner(System.in);
         while (input.hasNext()) {
+            initialGraph();
             n = input.nextInt();
             k = input.nextInt();
-            graph.graph.clear();
             String str1;
             String str2;
             int weight;
@@ -256,17 +259,99 @@ public class Graph {
                 str2 = input.next();
                 weight = input.nextInt();
                 // 构造图
-                graph.insertEdge(str1, str2, weight);
-                graph.insertEdge(str2, str1, weight);
+                insertEdge(str1, str2, weight);
+                insertEdge(str2, str1, weight);
             }
             // 展示图
-//            graph.showGraph();
+            showGraph();
 //            graph.DFS();
-            graph.initialVisit();
+            initialVisit();
 //            graph.BFS();
-            List<Map<String, Integer>> list = graph.solution();
-            graph.showResult(list, k);
+            List<Map<String, Integer>> list = solution();
+            showResult(list, k);
         }
+    }
+
+    class Point {
+        String nodeName;
+        int distance;
+
+        public Point(String nodeName, int distance) {
+            this.nodeName = nodeName;
+            this.distance = distance;
+        }
+    }
+
+    void Dijkstra(String source) {
+        Queue<Point> queue = new PriorityQueue<>(new Comparator<Point>() {
+            @Override
+            public int compare(Point o1, Point o2) {
+                return Integer.compare(o2.distance, o1.distance);
+            }
+        });
+        dist.put(source, 0);
+        queue.add(new Point(source, dist.get(source)));
+        while (!queue.isEmpty()) {
+            String key = queue.poll().nodeName;
+            GNode gNode = graph.get(key);
+            Edge edge = gNode.head;
+            while (edge != null) {
+                String end = edge.nodeName;
+                int d = edge.weight;
+                if (dist.get(end) > dist.get(key) + d) {
+                    dist.put(end, dist.get(key) + d);
+                    queue.add(new Point(end, dist.get(end)));
+                }
+                edge = edge.next;
+            }
+        }
+    }
+
+    void test2() {
+        int n, m;
+        Scanner input = new Scanner(System.in);
+        while (input.hasNext()) {
+            initialGraph();
+            n = input.nextInt();
+            m = input.nextInt();
+            String str1;
+            String str2;
+            String source = null;
+            for (int i = 0; i < n; ++i) {
+                // 一个边的头节点和尾节点，还有边的权值
+                str1 = input.next();
+                if (i == 0) {
+                    source = str1;
+                }
+                str2 = input.next();
+                // 构造图
+                insertEdge(str1, str2, (int) Math.pow(2, i));
+                insertEdge(str2, str1, (int) Math.pow(2, i));
+            }
+            Dijkstra("0");
+            for (Map.Entry<String, Integer> e : dist.entrySet()) {
+                if (!"0".equals(e.getKey())) {
+                    System.out.println(e.getValue() % 10000);
+                }
+            }
+        }
+    }
+
+
+    public static void main(String[] args) {
+        Graph graph = new Graph();
+        graph.test2();
     }
 }
 
+/*
+8 59
+BBB AAA 20
+CCC BBB 10
+AAA CCC 40
+EEE DDD 70
+DDD FFF 5
+FFF GGG 30
+GGG HHH 20
+HHH FFF 10
+*/

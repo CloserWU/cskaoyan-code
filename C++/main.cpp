@@ -9,13 +9,14 @@
 #include "Headers/Search.h"
 #include "Headers/DataStructure2.h"
 #include "Headers/Graph.h"
-#include "Sources/DS/Graph.cpp"
+//#include "Sources/DS/Graph.cpp"
+#include "Sources/DS/Graph01.cpp"
 
 using namespace std;
 
 int main() {
-//    test();
-    Graph obj;
-    obj.func5();
+    test();
+//    Graph obj;
+//    obj.func5();
     return 0;
 }
