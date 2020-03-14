@@ -17,6 +17,6 @@ using namespace std;
 int main() {
 //    test1();
     DP obj;
-    obj.func2();
+    obj.func4();
     return 0;
 }
