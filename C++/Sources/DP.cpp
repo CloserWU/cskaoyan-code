@@ -122,3 +122,59 @@ void DP::func4() {
         cout << dp[n][m] << endl;
     }
 }
+
+void DP::func5() {
+    int t, m;
+    while (cin >> t >> m) {
+        int dp[t + 1];
+        int time[m + 1];
+        int val[m + 1];
+        memset(dp, 0, sizeof(dp));
+        for (int i = 0; i < m; ++i) {
+            scanf("%d%d", &time[i], &val[i]);
+        }
+        for (int i = 0; i < m; ++i) {
+            for (int j = t; j >= time[i]; --j) {
+                dp[j] = max(dp[j], dp[j - time[i]] + val[i]);
+            }
+        }
+        cout << dp[t] << endl;
+    }
+}
+
+void DP::func6() {
+    int m, n;  // 集齐m，  n张邮票
+    const int INF = 1000;
+    while (cin >> m >> n) {
+        int stamp[n + 1];
+        int dp[n + 1][m + 1]; // 前n个邮票，集齐m， 所需要的邮票数
+        /*
+         dp[i][j] 前i个邮票，集齐j， 所需要的邮票数
+         -若第i个邮票不放入，则相当于前i-1张邮票要集齐j， dp[i][j] = dp[i - 1][j]
+         -若第j个邮票放入，则相当于前i-1张邮票，集齐j-stamp[i],然后票数加一， dp[i][j] = dp[i - 1][j - stamp[i]] + 1;
+         两者取最小值， dp[i][j] = min{dp[i - 1][j], dp[i - 1][j - stamp[i]] + 1 | j > stamp[i]}
+         dp[n][m]即为所求。
+         那么dp数组如何初始化？边界值设置为几？
+         根据定义 -当dp[0...n][0]时，不管有多少张邮票，都要凑成0，则显而易见，一张邮票都不用就行，所以dp[0...n][0] = 0
+                 - 当dp[0][1...m]时，没有一张邮票给你，但是要凑 大于0的数，则不可能，所以dp[0][1...m] = INF  (一个很大的数，别是INT_MAX，会爆int)
+
+         做完以上工作，下来就是套01背包的板子
+         */
+        for (int i = 0; i <= n; ++i) {
+            for (int j = 0; j <= m; ++j) {
+                if (j == 0) dp[i][j] = 0;
+                else dp[i][j] = INF;
+            }
+        }
+        for (int i = 1; i <= n; ++i) {
+            scanf("%d", &stamp[i]);
+        }
+        for (int i = 1; i <= n; ++i) {
+            for (int j = m; j >= stamp[i]; --j) {
+                    dp[i][j] = min(dp[i - 1][j], dp[i - 1][j - stamp[i]] + 1);
+            }
+        }
+        int res = (dp[n][m] == INF) ? 0 : dp[n][m];
+        cout << res << endl;
+    }
+}

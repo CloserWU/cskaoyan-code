@@ -18,6 +18,10 @@ public:
     void func3();
 
     void func4();
+
+    void func5();
+
+    void func6();
 };
 
 
