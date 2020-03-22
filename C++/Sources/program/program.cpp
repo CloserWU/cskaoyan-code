@@ -305,3 +305,45 @@ void func9() {
         }
     }
 }
+
+class Complex {
+public:
+    int x;
+    int y;
+
+    Complex(int x, int y) : x(x), y(y) {}
+
+    // 优先队列复杂类型的自定义排序
+    bool operator<(Complex c) const {
+        return x * x + y * y < c.x * c.x + c.y * c.y;
+    }
+};
+
+void func10() {
+    int n;
+    priority_queue<Complex> queue;
+    while (cin >> n) {
+        while (!queue.empty()) {
+            queue.pop();
+        }
+        string command;
+        while (n != 0) {
+            n--;
+            cin >> command;
+            if (command == "Pop") {
+                if (queue.size() == 0) {
+                    printf("empty\n");
+                } else {
+                    Complex c = queue.top();
+                    queue.pop();
+                    printf("%d+i%d\nSIZE = %d\n", c.x, c.y, queue.size());
+                }
+            } else {
+                int x, y;
+                scanf("%d+i%d", &x, &y);
+                queue.push(Complex(x, y));
+                printf("SIZE = %d\n", queue.size());
+            }
+        }
+    }
+}

@@ -19,6 +19,6 @@ int main() {
 //    test1();
 //    DP obj;
 //    obj.func6();
-    func9();
+    func10();
     return 0;
 }
