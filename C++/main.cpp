@@ -10,13 +10,15 @@
 #include "Headers/Graph.h"
 #include "Headers/DP.h"
 //#include "Sources/DS/Graph.cpp"
-#include "Sources/DS/Graph01.cpp"
+//#include "Sources/DS/Graph01.cpp"
+#include "Sources/program/program.cpp"
 
 using namespace std;
 
 int main() {
 //    test1();
-    DP obj;
-    obj.func6();
+//    DP obj;
+//    obj.func6();
+    func9();
     return 0;
 }

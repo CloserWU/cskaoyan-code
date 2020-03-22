@@ -8,4 +8,4 @@ add_executable(C__ main.cpp
         Headers/Recursive.h Headers/Search.h Headers/SortFind.h Headers/String.h Headers/Violence.h
         Sources/DataStructure.cpp Sources/DataStructure2.cpp Sources/Graph.cpp Sources/Greedy.cpp Sources/Mathematics.cpp
         Sources/Recursive.cpp Sources/Search.cpp Sources/SortFind.cpp Sources/String.cpp Sources/Violence.cpp Headers/DP.h Sources/DP.cpp
-        Sources/machine/machine.cpp)
+        )
