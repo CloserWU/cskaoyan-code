@@ -347,3 +347,161 @@ void func10() {
         }
     }
 }
+
+class Tree {
+public:
+    int val;
+    Tree *left;
+    Tree *right;
+
+    Tree(int val) {
+        this->val = val;
+        this->left = nullptr;
+        this->right = nullptr;
+    }
+};
+
+
+Tree *searchBST(Tree *root, int val) {
+    if (root != nullptr) {
+        if (root->val > val) {
+            if (root->left == nullptr) {
+                return root;
+            } else {
+                return searchBST(root->left, val);
+            }
+        } else if (root->val < val) {
+            if (root->right == nullptr) {
+                return root;
+            } else {
+                return searchBST(root->right, val);
+            }
+        } else {
+            return root;
+        }
+    }
+    return nullptr;
+}
+
+/**
+ * 好的BST插入
+ * @param num
+ * @param T
+ */
+void insert(int num, Tree *&T) {
+    if (!T) {
+        T = new Tree(num);
+    } else if (num < T->val) {
+        insert(num, T->left);
+    } else if (num > T->val) {
+        insert(num, T->right);
+    }
+    return;
+}
+
+void InsertBST(Tree *&root, int val) {
+    Tree *pre = searchBST(root, val);
+    if (pre == nullptr) {
+        root = new Tree(val);
+    } else {
+        if (pre->val > val) {
+            pre->left = new Tree(val);
+        } else if (pre->val < val) {
+            pre->right = new Tree(val);
+        }
+    }
+}
+
+void InOrderBST(Tree *root) {
+    if (root != nullptr) {
+        InOrderBST(root->left);
+        cout << root->val << " ";
+        InOrderBST(root->right);
+    }
+}
+
+void PreOrderBST(Tree *root) {
+    if (root != nullptr) {
+        cout << root->val << " ";
+        PreOrderBST(root->left);
+        PreOrderBST(root->right);
+    }
+}
+
+void PostOrderBST(Tree *root) {
+    if (root != nullptr) {
+        PostOrderBST(root->left);
+        PostOrderBST(root->right);
+        cout << root->val << " ";
+    }
+}
+
+
+void func11() {
+    int n;
+    while (cin >> n) {
+        Tree *root = nullptr;
+        for (int i = 0; i < n; ++i) {
+            int val;
+            cin >> val;
+            InsertBST(root, val);
+        }
+        PreOrderBST(root);
+        cout << endl;
+        InOrderBST(root);
+        cout << endl;
+        PostOrderBST(root);
+        cout << endl;
+    }
+}
+
+void func12() {
+    // SortFind func5
+}
+
+bool binary_search(const vector<int>& a, int target) {
+    int low = 0, high = a.size() - 1;
+    while (low <= high) {
+        int mid = (low + high) / 2;
+        if (target < a[mid]) {
+            high = mid - 1;
+        } else if (target > a[mid]) {
+            low = mid + 1;
+        } else {
+            return true;
+        }
+    }
+    return false;
+}
+
+void func13() {
+    int n;
+    while (cin >> n) {
+        vector<int> a(n);
+        for (int i = 0; i < n; ++i) {
+            cin >> a[i];
+        }
+        sort(a.begin(), a.end());
+        int m;
+        cin >> m;
+        for (int j = 0; j < m; ++j) {
+            int target;
+            cin >> target;
+            if (binary_search(a, target)) {  //自定义二分
+                cout << "YES" << endl;
+            } else {
+                cout << "NO" << endl;
+            }
+            if (binary_search(a.begin(), a.end(), target)) {  // STL二分
+                cout << "YES" << endl;
+            } else {
+                cout << "NO" << endl;
+            }
+            if (find(a.begin(), a.end(), target) != a.end()) {
+                cout << "YES" << endl;
+            } else {
+                cout << "NO" << endl;
+            }
+        }
+    }
+}
